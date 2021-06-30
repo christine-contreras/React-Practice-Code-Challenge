@@ -9,7 +9,8 @@ class App extends Component {
   state = {
     sushiArray: [],
     eatenSushi: [],
-    sushiIndex: 0
+    sushiIndex: 0,
+    budget: 80
   }
 
   componentDidMount() {
@@ -24,16 +25,24 @@ class App extends Component {
     this.setState(previousState => {
       return {
         sushiIndex: previousState.sushiIndex + 4
+        
       }
     })
   }
 
   handleEatenSushi = (sushi) => {
-    this.setState(previousState => {
-      return {
-        eatenSushi: [...previousState.eatenSushi, sushi]
-      }
-    })
+
+    if(this.state.budget - sushi.price >= 0 ){
+      this.setState(previousState => {
+        return {
+          eatenSushi: [...previousState.eatenSushi, sushi],
+          budget: previousState.budget - sushi.price
+        }
+      })
+    } else {
+      alert("you don't have the budget for more sushi!")
+    }
+
   }
 
   render() {
@@ -47,7 +56,9 @@ class App extends Component {
         handleMoreSushi={this.handleMoreSushi}
         handleEatenSushi={this.handleEatenSushi}
         />
-        <Table eatenSushi={this.state.eatenSushi}/>
+        <Table
+        budgetLeft={this.state.budget}
+        eatenSushi={this.state.eatenSushi}/>
       </div>
     );
   }
