@@ -28,13 +28,26 @@ class App extends Component {
     })
   }
 
+  handleEatenSushi = (sushi) => {
+    this.setState(previousState => {
+      return {
+        eatenSushi: [...previousState.eatenSushi, sushi]
+      }
+    })
+  }
+
   render() {
     const currentSushi = this.state.sushiArray.slice(this.state.sushiIndex, this.state.sushiIndex + 4)
 
     return (
       <div className="app">
-        <SushiContainer sushis={currentSushi} handleMoreSushi={this.handleMoreSushi}/>
-        <Table />
+        <SushiContainer
+        sushis={currentSushi}
+        eatenSushi={this.state.eatenSushi}
+        handleMoreSushi={this.handleMoreSushi}
+        handleEatenSushi={this.handleEatenSushi}
+        />
+        <Table eatenSushi={this.state.eatenSushi}/>
       </div>
     );
   }
