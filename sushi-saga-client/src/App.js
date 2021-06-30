@@ -22,9 +22,16 @@ class App extends Component {
   }
 
   handleMoreSushi = () => {
+    const newIndex = this.state.sushiIndex + 4
+    let startOver = false
+
+    if(newIndex >= this.state.sushiArray.length) {
+      startOver = true
+    }
+    
     this.setState(previousState => {
       return {
-        sushiIndex: previousState.sushiIndex + 4
+        sushiIndex: startOver ? 0 : previousState.sushiIndex + 4
         
       }
     })
